@@ -5,31 +5,30 @@ class AppTheme {
   // Define your primary color explicitly
   static const Color primaryRed = Color(0xffC2072C);
   static const Color primaryWhite = Colors.white;
-  static const Color lightGrey = Color(0xFFEEEEEE); 
+  static const Color lightGrey = Color(0xFFEEEEEE);
 
   static final ThemeData lightTheme = ThemeData(
     primaryColor: primaryRed,
     colorScheme: ColorScheme.fromSwatch(
-      primarySwatch: _createMaterialColor(primaryRed), 
+      primarySwatch: _createMaterialColor(primaryRed),
     ).copyWith(
-      secondary: primaryWhite, 
-      surface: primaryWhite, 
-      onPrimary: primaryWhite, 
+      secondary: primaryWhite,
+      surface: primaryWhite,
+      onPrimary: primaryWhite,
       onSecondary: Colors.black,
       onSurface: Colors.black87,
       error: Colors.redAccent,
       onError: primaryWhite,
     ),
-    scaffoldBackgroundColor: primaryWhite, 
+    scaffoldBackgroundColor: primaryWhite,
     appBarTheme: const AppBarTheme(
-      backgroundColor: primaryRed, 
-      foregroundColor: primaryWhite, 
+      backgroundColor: primaryRed,
+      foregroundColor: primaryWhite,
       centerTitle: true,
-      elevation: 0, 
+      elevation: 0,
     ),
-    
     textTheme: GoogleFonts.poppinsTextTheme().apply(
-      bodyColor: Colors.black87, 
+      bodyColor: Colors.black87,
       displayColor: Colors.black87,
     ),
     buttonTheme: const ButtonThemeData(
@@ -55,7 +54,7 @@ class AppTheme {
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: lightGrey, 
+      fillColor: lightGrey,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
         borderSide: BorderSide.none,
@@ -80,16 +79,17 @@ class AppTheme {
 }
 
 MaterialColor _createMaterialColor(Color color) {
-  List strengths = <double>[.05];
-  Map<int, Color> swatch = {};
+  List<double> strengths = <double>[.05];
+  final Map<int, Color> swatch = {};
   final int r = color.red, g = color.green, b = color.blue;
 
   for (int i = 1; i < 10; i++) {
-    strengths.add(0.1 * i);
+    strengths.add(i * 0.1);
   }
-  for (var strength in strengths) {
+
+  for (final strength in strengths) {
     final double ds = 0.5 - strength;
-    swatch[(color.value * strength).round()] = Color.fromRGBO(
+    swatch[(strength * 1000).round()] = Color.fromRGBO(
       r + ((ds < 0 ? r : (255 - r)) * ds).round(),
       g + ((ds < 0 ? g : (255 - g)) * ds).round(),
       b + ((ds < 0 ? b : (255 - b)) * ds).round(),

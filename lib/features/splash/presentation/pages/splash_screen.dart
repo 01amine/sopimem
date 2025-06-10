@@ -15,10 +15,15 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  bool _isInitialized = false;
+
   @override
-  void initState() {
-    super.initState();
-    context.read<SplashBloc>().add(const InitializeApp());
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_isInitialized) {
+      context.read<SplashBloc>().add(const InitializeApp());
+      _isInitialized = true;
+    }
   }
 
   @override
@@ -42,8 +47,12 @@ class _SplashScreenState extends State<SplashScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               //sopimem logo
-              SvgPicture.asset(AppImages.logo),
-              SizedBox(height: context.height * 0.05),
+              SvgPicture.asset(
+                AppImages.logo,
+                width: context.width * 0.7,
+                height: context.width * 0.7,
+              ),
+
               CircularProgressIndicator(
                 color: context.theme.primaryColor,
               ),
