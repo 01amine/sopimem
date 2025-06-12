@@ -1,30 +1,35 @@
 part of 'splash_bloc.dart';
 
 @immutable
-sealed class SplashState extends Equatable {
+abstract class SplashState extends Equatable {
   const SplashState();
-
+  
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [];
 }
 
-final class SplashInitial extends SplashState {
+class SplashInitial extends SplashState {
   const SplashInitial();
 }
 
-final class SplashLoading extends SplashState {
+class SplashLoading extends SplashState {
   const SplashLoading();
 }
 
-final class SplashLoaded extends SplashState {
-  const SplashLoaded();
+class SplashLoaded extends SplashState {
+  final String route;
+  
+  const SplashLoaded({required this.route});
+  
+  @override
+  List<Object> get props => [route];
 }
 
-final class SplashError extends SplashState {
+class SplashError extends SplashState {
   final String message;
-
+  
   const SplashError({required this.message});
-
+  
   @override
-  List<Object?> get props => [message];
+  List<Object> get props => [message];
 }

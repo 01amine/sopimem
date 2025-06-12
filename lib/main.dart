@@ -4,9 +4,11 @@ import 'package:real_estate_app/features/buildings/presentation/bloc/building_bl
 import 'package:real_estate_app/features/common/presentation/theme/app_theme.dart';
 import 'package:real_estate_app/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:real_estate_app/features/splash/presentation/pages/splash_screen.dart';
+import 'package:real_estate_app/features/onboarding/presentation/bloc/onboarding_bloc.dart';
 import 'package:real_estate_app/di/injection_container.dart' as di;
 
 import 'features/buildings/presentation/pages/home_screen.dart';
+import 'features/onboarding/presentation/screens/onboarding_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +30,10 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       routes: {
+        '/onboarding': (context) => BlocProvider(
+          create: (_) => di.sl<OnboardingBloc>(),
+          child: const OnboardingScreen(),
+        ),
         '/home': (context) => BlocProvider(
           create: (_) => di.sl<BuildingBloc>(),
           child: const HomeScreen(),
