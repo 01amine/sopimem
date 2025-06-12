@@ -22,8 +22,6 @@ class BuildingRemoteDataSourceImpl implements BuildingRemoteDataSource {
   @override
   Future<List<BuildingModel>> getAllBuildings() async {
     try {
-      print("before request");
-      print("API URL: $baseUrl");
       final response = await client.get(
         Uri.parse('$baseUrl/projects'),
         headers: {
