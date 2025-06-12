@@ -46,6 +46,7 @@ dependencies:
   flutter_svg: ^2.1.0
   animated_text_kit: ^4.2.3
   flutter_dotenv: ^5.2.1
+  redacted: ^1.0.13
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +75,7 @@ flutter:
     - assets/images/
     - assets/svgs/
     - assets/videos/
+    - .env
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
