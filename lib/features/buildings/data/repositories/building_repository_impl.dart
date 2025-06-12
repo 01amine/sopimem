@@ -9,16 +9,35 @@ class BuildingRepositoryImpl implements BuildingRepository {
 
   @override
   Future<List<Building>> getBuildings() async {
-    return await remoteDataSource.getAllBuildings();
+    try {
+      final buildings = await remoteDataSource.getAllBuildings();
+      return buildings;
+    } catch (e) {
+      print(e);
+      throw Exception('Failed to get buildings: $e');
+    }
   }
 
   @override
   Future<Building> getBuildingDetails(String id) async {
-    return await remoteDataSource.getBuildingById(id);
+    try {
+      final building = await remoteDataSource.getBuildingById(id);
+      return building;
+    } catch (e) {
+      print(e);
+      throw Exception('Failed to get building details: $e');
+    }
   }
-
+  
   @override
   Future<List<Building>> filterBuildings(String query) async {
-    return await remoteDataSource.searchBuildings(query);
+    try {
+      final buildings = await remoteDataSource.searchBuildings(query);
+      return buildings;
+    } catch (e) {
+      print(e);
+      throw Exception('Failed to filter buildings: $e');
+    }
   }
-}
+    }
+  

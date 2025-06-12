@@ -29,7 +29,7 @@ class BuildingBloc extends Bloc<BuildingEvent, BuildingState> {
       emit(BuildingLoading());
       try {
         final building = await getBuildingDetails(event.id);
-        emit(BuildingDetailsLoaded(building));
+        emit(BuildingDetailsLoaded(building ));
       } catch (e) {
         emit(BuildingError(e.toString()));
       }

@@ -1,12 +1,29 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:real_estate_app/core/extentions/extensions.dart';
 import 'package:real_estate_app/core/utils/constants.dart';
+import '../bloc/building_bloc.dart';
+import '../bloc/building_event.dart';
+import '../bloc/building_state.dart';
+import '../widgets/building_card.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    context.read<BuildingBloc>().add(GetAllBuildingsEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +104,104 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(flex: 3, child: Container()),
+          Expanded(
+            flex: 3,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(height: context.height * 0.02),
+                  // Action cards row
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: context.width * 0.05),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        buildActionCard(
+                          context,
+                          "Offres",
+                          Icons.local_offer,
+                          () {
+                            // Navigate to offers
+                          },
+                        ),
+                        buildActionCard(
+                          context,
+                          "Consultant",
+                          Icons.person,
+                          () {
+                            // Navigate to consultant
+                          },
+                        ),
+                        buildActionCard(
+                          context,
+                          "Tour virtuel",
+                          Icons.tour_outlined,
+                          () {
+                            // Navigate to virtual tour
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: context.height * 0.03),
+                  // Buildings section
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: context.width * 0.05),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Nos Promotions",
+                          style: GoogleFonts.poppins(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            // Navigate to all buildings
+                          },
+                          child: Text(
+                            "Voir tout",
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              color: context.theme.primaryColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: context.height * 0.01),
+                  // BLoC Consumer for buildings
+                  BlocConsumer<BuildingBloc, BuildingState>(
+                    listener: (context, state) {
+                      if (state is BuildingError) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Erreur: ${state.message}'),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is BuildingLoading) {
+                        return buildSkeletonList(context);
+                      } else if (state is BuildingsLoaded) {
+                        return buildBuildingsList(context, state.buildings);
+                      } else if (state is BuildingError) {
+                        return buildErrorWidget(context, state.message);
+                      }
+                      return buildEmptyState(context);
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
