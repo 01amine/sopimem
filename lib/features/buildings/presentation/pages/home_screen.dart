@@ -1,7 +1,9 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:real_estate_app/core/extentions/extensions.dart';
+import 'package:real_estate_app/core/utils/constants.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -24,26 +26,35 @@ class HomeScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  SizedBox(height: context.height * 0.09),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 250.0,
-                        child: DefaultTextStyle(
-                          style: const TextStyle(
-                              fontSize: 20.0, color: Colors.white),
-                          child: AnimatedTextKit(
-                            animatedTexts: [
-                              TyperAnimatedText('Bienvenue à Sopimem',
-                                  speed: const Duration(milliseconds: 300)),
-                            ],
+                  SvgPicture.asset(AppImages.logo,
+                      color: Colors.white,
+                      width: context.width * 0.3,
+                      height: context.width * 0.3),
+                  Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: context.width * 0.8,
+                          child: DefaultTextStyle(
+                            style: const TextStyle(
+                                fontSize: 20.0, color: Colors.white),
+                            child: AnimatedTextKit(
+                              animatedTexts: [
+                                TyperAnimatedText('Bienvenue à Sopimem',
+                                    speed: const Duration(milliseconds: 300),
+                                    textStyle: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24,
+                                    )),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                  SizedBox(height: context.height * 0.04),
+                  SizedBox(height: context.height * 0.09),
                   GestureDetector(
                     onTap: () {
                       Navigator.pushNamed(context, '/filter');
